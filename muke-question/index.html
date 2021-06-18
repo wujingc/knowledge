@@ -6,14 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>js</title>
+    <style>
+        #text1:first-child {
+            color: red
+        }
+
+        .aa {
+            margin-top: 30px;
+            margin-left: 20px;
+            padding-top: 60px;
+            padding-left: 30px;
+        }
+
+    </style>
 </head>
+<!-- 选择属于其父元素的首个子元素的每个 <p> 元素，并为其设置样式： -->
+<!--行内元素的padding和margin https://blog.csdn.net/qq_37621289/article/details/82859024 -->
 
 <body id="container">
-    <p id="text1" cutt="1" data-aa-bb="34">
-        <span>一段文字 1</span>
-    </p>
+    <div>
+        <div style="padding-top: 10px; padding-bottom: 10px;">
+            22
+            <!-- <div style=""></div> -->
+        </div>
+        <div>
+            <div>
+                <p>123</p>
+            </div>
+            <p id="text1" cutt="1" data-aa-bb="34">
+                11
+                <span>bb</span>
+                <span>一段文字 1</span>
+            </p>
+        </div>
+        <span class="aa">22</span>
+
+        <p id="text2" cutt="1" data-aa-bb="34">
+            <span>一段文字 1</span>
+        </p>
+    </div>
+
     <p id="text2">一段文字 2</p>
-    <script src="./function.js"></script>
+    <!-- <script src="./function.js"></script> -->
+    <script src="./prototype.js"></script>
 </body>
 
 </html>
