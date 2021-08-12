@@ -107,3 +107,30 @@ var a = new createSingle( 'sven1' );
 var b = new createSingle( 'sven2' );
 console.log('single', a === b)
 console.log('single', a.getList())
+
+// 工厂模式
+function factory(name,age,content){
+  var obj = new Object();
+  obj.name = name;
+  obj.age = age;
+  obj.content = content;
+  return obj;
+}
+
+// 原型模式
+
+// 策略模式
+var strategies = {
+  "S": function( salary ){
+      return salary * 4;
+  },
+  "A": function( salary ){
+      return salary * 3;
+  },
+  "B": function( salary ){
+      return salary * 2;
+  }
+}
+var calculateBonus = function( level, salary ){
+  return strategies[ level ]( salary );
+}
