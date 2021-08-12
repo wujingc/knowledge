@@ -18,10 +18,73 @@
             padding-left: 30px;
         }
 
+        .box {
+            height: 200px;
+            width: 200px;
+            text-align: center;
+            border: 2px solid black;
+            background-color: #ea5;
+            vertical-align: top;
+        }
+
+        .overLap {
+            display: inline-block;
+            margin-left: -60px;
+        }
+
+        .one {
+            margin-left: 0;
+        }
+
+        .two {
+            margin-top: 30px;
+        }
+
+        .three {
+            margin-top: 60px;
+        }
+
+        .positioned {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .white {
+            background-color: #fff;
+        }
+
+        .zIndex-1 {
+            z-index: -1;
+        }
+
+        .zIndex0 {
+            z-index: 0;
+        }
+
+        .zIndex1 {
+            z-index: 1;
+        }
+
+        .zIndex2 {
+            z-index: 2;
+        }
+
     </style>
 </head>
 <!-- 选择属于其父元素的首个子元素的每个 <p> 元素，并为其设置样式： -->
 <!--行内元素的padding和margin https://blog.csdn.net/qq_37621289/article/details/82859024 -->
+
+<!-- 其实，层叠上下文也基本上是有一些特定的CSS属性创建的，一般有3种方法：
+
+HTML中的根元素<html></html>本身j就具有层叠上下文，称为“根层叠上下文”。
+普通元素设置position属性为非static值并设置z-index属性为具体数值，产生层叠上下文。
+CSS3中的新属性也可以产生层叠上下文。
+层叠登记是在同一层叠上下文才生效的 -->
+<!-- https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context -->
+
 
 <body id="container">
     <div>
@@ -45,6 +108,14 @@
             <span>一段文字 1</span>
         </p>
     </div>
+
+    <!-- 当一个元素被显示设置z-index值，不管是正数、负数还是 0，所有这个元素和它的所有后代元素形成一个层叠上下文。层叠上下文的后代元素只参与和根元素的对比，不参与和根元素以外的元素对比。 -->
+    <!-- 关键点：有没有设置zindex -->
+    <div class="one overLap zIndex2 box positioned">one
+        <div class="white zIndex-1 positioned">four</div>
+    </div>
+    <div class="two overLap box zIndex1 positioned">two</div>
+    <div class="three zIndex2 overLap box">three</div>
 
     <p id="text2">一段文字 2</p>
     <!-- <script src="./function.js"></script> -->
