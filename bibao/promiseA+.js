@@ -5,24 +5,43 @@ function CutePromise(executor) {
   this.reason = null;
   // status 记录当前状态，初始化是 pending
   this.status = 'pending';
+
+  this.onResolvedQueue = [];
+  this.onRejectedQueue = [];
    
   // 把 this 存下来，后面会用到
   var self = this;
+  
 
   // 定义 resolve 函数
   function resolve(value) {
+      if (self.status !== 'pending') {
+        return;
+      }
       // 异步任务成功，把结果赋值给 value
       self.value = value;
       // 当前状态切换为 resolved
       self.status = 'resolved'; 
+      // 用 setTimeout 延迟队列任务的执行
+      setTimeout(function(){
+        // 批量执行 resolved 队列里的任务
+        self.onResolvedQueue.forEach(resolved => resolved(self.value)); 
+      });
   }
   
   // 定义 reject 函数
   function reject(reason) {
+      if (self.status !== 'pending') {
+        return;
+      }
       // 异步任务失败，把结果赋值给 value
       self.reason = reason; 
       // 当前状态切换为 rejected
       self.status = 'rejected';
+      setTimeout(function(){
+        // 批量执行 rejected 队列里的任务
+        self.onRejectedQueue.forEach(rejected => rejected(self.reason));
+      });
   }
   // 把 resolve 和 reject 能力赋予执行器
   executor(resolve, reject);
@@ -48,7 +67,20 @@ CutePromise.prototype.then = function(onResolved, onRejected) {
   } else if (self.status === 'rejected') {
       // 若是 rejected 状态，则执行 rejected 对应方法
       onRejected(self.reason);
+  } else if (self.status === 'pending') {
+    // 若是 pending 状态，则只对任务做入队处理
+    self.onResolvedQueue.push(onResolved);
+    self.onRejectedQueue.push(onRejected);
   }
+  return this
 };
 
-console.log(33)
+const cutePromise = new CutePromise(function (resolve, reject) {
+  resolve('成了！');
+});
+cutePromise.then((value) => {
+  console.log(value)
+  console.log('我是第 1 个任务')
+}).then(value => {
+  console.log('我是第 2 个任务')
+});
